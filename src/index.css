@@ -1,1 +1,12 @@
 @import "tailwindcss";
+
+@theme {
+    --container-padding: 1.25rem;
+    --color-body: #1d1e28;
+    --color-light: #fff;
+}
+
+.container {
+    margin-inline: auto;
+    padding-inline: var(--container-padding);
+}
