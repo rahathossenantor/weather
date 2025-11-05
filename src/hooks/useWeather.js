@@ -22,7 +22,11 @@ const useWeather = () => {
 
     const fetchWeatherInfo = async (latitude, longitude) => {
         try {
-            setLoading({ state: true, message: "Loading weather data..." });
+            setLoading((prevLoading) => ({
+                ...prevLoading,
+                state: true,
+                message: "Fetching weather data...",
+            }));
 
             const response = await fetch(
                 `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${"d81493c0fe7e2deb506aef48bfff14d5"}&units=metric`
@@ -35,8 +39,8 @@ const useWeather = () => {
             }
 
             const data = await response.json();
-            setWeather({
-                ...weather,
+            setWeather((prevWeather) => ({
+                ...prevWeather,
                 location: data?.name,
                 climate: data?.weather[0]?.main,
                 temperature: data?.main?.temp,
@@ -48,11 +52,15 @@ const useWeather = () => {
                 time: data?.dt,
                 longitude: longitude,
                 latitude: latitude,
-            });
+            }));
         } catch (err) {
             setError(err);
         } finally {
-            setLoading({ state: false, message: "" });
+            setLoading((prevLoading) => ({
+                ...prevLoading,
+                state: false,
+                message: "",
+            }));
         }
     };
 
@@ -63,15 +71,10 @@ const useWeather = () => {
             message: "Finding location...",
         }));
 
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const { latitude, longitude } = position.coords;
-                fetchWeatherInfo(latitude, longitude);
-            },
-            (error) => {
-                setError(error);
-            }
-        );
+        navigator.geolocation.getCurrentPosition((position) => {
+            const { latitude, longitude } = position.coords;
+            fetchWeatherInfo(latitude, longitude);
+        });
     }, []);
 
     return { weather, loading, error };

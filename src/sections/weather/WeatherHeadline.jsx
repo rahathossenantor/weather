@@ -1,22 +1,60 @@
+import { useContext } from "react";
 import cloud from "../../assets/cloud.svg";
+import haze from "../../assets/haze.svg";
+import snow from "../../assets/icons/snow.svg";
+import sunny from "../../assets/icons/sunny.svg";
 import pin from "../../assets/pin.svg";
+import rain from "../../assets/rainy.svg";
+import thunder from "../../assets/thunder.svg";
+import { WeatherContext } from "../../context";
+import { getFormattedDate } from "../../utils/date-utils";
 
 export default function WeatherHeadline() {
+    const { weather } = useContext(WeatherContext);
+    const { climate, location, temperature, time } = weather;
+
+    const getWeatherIcon = (climate) => {
+        switch (climate) {
+            case "Rain":
+                return rain;
+            case "Clouds":
+                return cloud;
+            case "Clear":
+                return sunny;
+            case "Snow":
+                return snow;
+            case "Thunder":
+                return thunder;
+            case "Fog":
+                return haze;
+            case "Haze":
+                return haze;
+            case "Mist":
+                return haze;
+
+            default:
+                return sunny;
+        }
+    };
+
     return (
         <div>
             <div className="max-md:flex items-center justify-between md:-mt-10">
-                <img src={cloud} alt="cloud" />
+                <img src={getWeatherIcon(climate)} alt={climate} />
                 <div className="max-md:flex items-center max-md:space-x-4">
                     <h1 className="text-[60px] lg:text-[80px] xl:text-[100px] leading-none md:mb-4">
-                        16°
+                        {Math.round(temperature)}°
                     </h1>
                     <div className="flex items-center space-x-4 md:mb-4">
                         <img src={pin} alt="pin" />
-                        <h2 className="text-2xl lg:text-[50px]">Dhaka</h2>
+                        <h2 className="text-2xl lg:text-[50px]">{location}</h2>
                     </div>
                 </div>
             </div>
-            <p className="text-sm lg:text-lg">06:09 - Sunday, 9 Dec ‘23</p>
+            <p className="text-sm lg:text-lg">
+                {getFormattedDate(time, "time")} -{" "}
+                {getFormattedDate(time, "date")}
+            </p>
         </div>
     );
 }
