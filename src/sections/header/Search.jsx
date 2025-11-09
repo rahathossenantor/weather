@@ -11,6 +11,7 @@ export default function Search() {
         e.preventDefault();
         const searchedLocation = getLocationByName(searchTerm);
         setSelectedLocation({ ...searchedLocation });
+        setSearchTerm("");
     };
 
     return (
@@ -21,6 +22,7 @@ export default function Search() {
                     type="search"
                     placeholder="Search Location"
                     required
+                    value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
                 <button type="submit" className="cursor-pointer">

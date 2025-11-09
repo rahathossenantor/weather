@@ -23,7 +23,11 @@ export default function Header() {
                         <img src={heart} alt="heart" />
                         <span>Favorite Locations</span>
                     </button>
-                    {showFavoriteModal && <FavoriteLocationsListModal />}
+                    {showFavoriteModal && (
+                        <FavoriteLocationsListModal
+                            onClose={() => setShowFavoriteModal(false)}
+                        />
+                    )}
                 </div>
             </nav>
         </header>
