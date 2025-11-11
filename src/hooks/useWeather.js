@@ -32,7 +32,9 @@ const useWeather = () => {
             }));
 
             const response = await fetch(
-                `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${"d81493c0fe7e2deb506aef48bfff14d5"}&units=metric`
+                `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${
+                    import.meta.env.VITE_WEATHER_API_KEY
+                }&units=metric`
             );
 
             if (!response.ok) {

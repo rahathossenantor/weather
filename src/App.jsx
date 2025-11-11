@@ -16,3 +16,5 @@ export default function App() {
         </LocationProvider>
     );
 }
+
+// VITE_WEATHER_API_KEY = d81493c0fe7e2deb506aef48bfff14d5;
